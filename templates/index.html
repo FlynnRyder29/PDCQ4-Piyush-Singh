@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piyush Breadwinner App</title>
+    <style>
+        :root {
+        --primary: #4f46e5;
+        /* Updated Background: Replace the URL with any high-quality abstract image */
+        --bg-image: url('https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg');
+        --glass-bg: rgba(255, 255, 255, 0.15); /* Slightly more transparent for the image */
+        --glass-border: rgba(255, 255, 255, 0.2);
+        --text-color: #1f2937;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-image);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed; /* Keeps image still while scrolling */
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        color: var(--text-color);
+    }
+
+        .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .auth-box {
+            margin-bottom: 20px;
+        }
+
+        .google-btn {
+            background-color: #fff;
+            color: #757575;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .google-btn:hover {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.22);
+        }
+
+        .google-btn img {
+            width: 18px;
+            margin-right: 12px;
+        }
+
+        .profile-info {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid var(--primary);
+        }
+
+        .sign-out {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        
+        .sign-out:hover {
+            text-decoration: underline;
+        }
+
+        .design-section {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            width: 150px;
+        }
+
+        @keyframes rgb-glow {
+        0% { background-position: 0% 50%; box-shadow: 0 0 10px #ff0000; }
+        33% { background-position: 50% 100%; box-shadow: 0 0 15px #00ff00; }
+        66% { background-position: 100% 50%; box-shadow: 0 0 15px #0000ff; }
+        100% { background-position: 0% 50%; box-shadow: 0 0 10px #ff0000; }
+    }
+
+    .display-btn {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: rgb-glow 3s ease infinite;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: transform 0.2s;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .display-btn:hover {
+        transform: scale(1.05); /* Slight pop on hover */
+        animation: rgb-glow 1s linear infinite; /* Speed up animation on hover */
+    }
+
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.2;
+            margin-top: 20px;
+            white-space: pre;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        {% if user %}
+            <!-- Logged In View -->
+            <div class="profile-info">
+                <div class="profile-header">
+                    {% if user.picture %}
+                    <img src="{{ user.picture }}" alt="Profile" class="profile-pic">
+                    {% endif %}
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.2em;">Hello {{ user.name }} <a href="/logout" class="sign-out">[Sign out]</a></h2>
+                    </div>
+                </div>
+                <p>Congratulations Yay, You are signed in with the email {{ user.email }}</p>
+                <p style="font-size: 0.9em; color: #666;">Current Indian Time: {{ time }}</p>
+            </div>
+
+            <div class="design-section">
+                <h3 style="color: #fff;">Printing the world class design</h3>
+                <div class="input-group">
+                    <input type="number" id="linesInput" placeholder="Number of Lines" max="100">
+                    <button class="display-btn" onclick="generateDesign()">Display</button>
+                </div>
+                <pre id="outputArea" class="hidden"></pre>
+            </div>
+
+        {% else %}
+            <!-- Logged Out View -->
+            <h1>Authentication</h1>
+            <p style="color: #fff; margin-bottom: 30px;">Sign in to access the design tool.</p>
+            
+            <a href="/login" class="google-btn">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+                Sign in with Google
+            </a>
+        {% endif %}
+    </div>
+
+    <script>
+        async function generateDesign() {
+            const lines = document.getElementById('linesInput').value;
+            const outputArea = document.getElementById('outputArea');
+            
+            if (!lines || lines <= 0) {
+                alert("Woh man High numbers , i like the way you think but Please enter a valid number of lines. I will give you a guess its between 1 and 100:");
+                return;
+            }
+
+            try {
+                const response = await fetch('/print', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ lines: lines })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    outputArea.textContent = data.result;
+                    outputArea.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert("An error occurred while generating the design.");
+            }
+        }
+    </script>
+</body>
+</html>
