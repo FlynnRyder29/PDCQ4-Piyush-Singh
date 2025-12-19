@@ -61,14 +61,16 @@ def generate_diamond(n):
 
     text_source = "FORMULAQSOLUTIONS"
     text_len = len(text_source)
-    
-    peak_row = (n // 2) + 1
+    peak_row = (n // 2)+1
     max_width = (2 * peak_row) - 1
-    
+    if n%2==0:
+        x=2
+    else:
+        x=1
     
     lines = []
     
-    for r in range(1, n + 1):
+    for r in range(1, n + x):
         # Calculate width
         if r <= peak_row:
             width = 2 * r - 1
@@ -97,12 +99,17 @@ def generate_diamond(n):
             if width > 1:
                 # The last char corresponds to index `start_idx + width - 1`
                 char_idx = start_idx + width - 1
+                
                 row_str += text_source[char_idx % text_len]
         else:
             # Fill row - continuous substring
             for k in range(width):
                 char_idx = start_idx + k
-                row_str += text_source[char_idx % text_len]
+                if k!=0 and k!=width-1:
+                    row_str+=" "
+                else:
+                    row_str += text_source[char_idx % text_len]
+                
         
         lines.append(row_str)
         
